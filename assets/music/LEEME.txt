@@ -1,0 +1,22 @@
+=======================================================
+ CÓMO PONER TU CANCIÓN EN LA PÁGINA WEB
+=======================================================
+
+¡Es súper fácil! Tienes 2 opciones:
+
+OPCIÓN 1 (La más recomendada y permanente):
+1. Elige tu canción favorita de ustedes (en formato .mp3, .m4a o .wav).
+2. Cópiala y pégala aquí mismo en esta carpeta:
+   assets/music/
+3. Renómbrala exactamente a:
+   cancion.mp3
+
+¡Y listo! Al abrir la página o tocar el sobre de bienvenida, sonará tu canción automáticamente.
+
+-------------------------------------------------------
+OPCIÓN 2 (Desde la misma página web):
+1. Abre la página en tu navegador.
+2. Toca el botón de engranaje (⚙️ Personalizar) arriba a la derecha.
+3. Haz clic en "📁 Elegir canción de mi dispositivo".
+4. Selecciona tu archivo de música y se reproducirá al instante.
+=======================================================

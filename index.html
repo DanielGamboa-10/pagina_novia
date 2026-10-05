@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <meta name="theme-color" content="#ffe5ec">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Un Detalle Especial Para Ti ❤️</title>
+  <meta name="description" content="Una sorpresa interactiva, didáctica y llena de amor hecha especialmente para ti.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Canvas de fondo para partículas y corazones -->
+  <canvas id="ambient-canvas" aria-hidden="true"></canvas>
+
+  <!-- Audio de fondo (canción personalizada o melodía suave) -->
+  <audio id="romantic-bg-audio" preload="auto" loop src="assets/music/cancion.mp3"></audio>
+
+  <!-- Botones Flotantes de Control (Música y Ajustes) -->
+  <aside class="floating-controls" aria-label="Controles rápidos">
+    <button id="music-toggle-btn" class="control-btn" title="Activar/Silenciar música romántica" aria-label="Música">
+      <span class="btn-icon" id="music-icon">🎵</span>
+      <span class="btn-tooltip">Música de fondo</span>
+    </button>
+    <button id="customize-toggle-btn" class="control-btn" title="Personalizar nombres y fecha" aria-label="Personalizar">
+      <span class="btn-icon">⚙️</span>
+      <span class="btn-tooltip">Personalizar</span>
+    </button>
+  </aside>
+
+  <!-- PANTALLA 1: SOBRE DE BIENVENIDA / APERTURA -->
+  <section id="envelope-screen" class="envelope-screen active" aria-label="Carta de bienvenida">
+    <div class="envelope-wrapper">
+      <div class="envelope" id="envelope-element" tabindex="0" role="button" aria-label="Toca o haz clic para abrir la carta">
+        <div class="envelope-back"></div>
+        <div class="envelope-letter">
+          <div class="letter-preview">
+            <span class="mini-heart">💖</span>
+            <p class="preview-text">Tengo una sorpresa preparada para ti...</p>
+          </div>
+        </div>
+        <div class="envelope-flap"></div>
+        <div class="envelope-pocket"></div>
+        <div class="wax-seal" id="wax-seal-btn">
+          <span class="seal-icon">❤️</span>
+          <span class="seal-text">Ábreme</span>
+        </div>
+      </div>
+      <p class="envelope-hint">✨ Toca el sello para descubrir tu detalle ✨</p>
+    </div>
+  </section>
+
+  <!-- PANTALLA 2: CONTENIDO PRINCIPAL INTERACTIVO -->
+  <main id="main-content" class="main-content hidden">
+    
+    <!-- Hero / Encabezado Romántico -->
+    <header class="hero-section">
+      <div class="hero-badge">
+        <span class="badge-sparkle">✨</span>
+        <span id="display-badge-text">Hecho con todo mi amor</span>
+        <span class="badge-sparkle">✨</span>
+      </div>
+      <h1 class="hero-title">
+        Para el amor de mi vida: <span id="display-girlfriend-name" class="highlight-name">Mi Princesa Hermosa</span>
+      </h1>
+      <p class="hero-subtitle" id="display-hero-message">
+        Cada instante a tu lado es mi lugar favorito en el mundo. Creé este rinconcito interactivo solo para recordarte lo mucho que significas para mí.
+      </p>
+
+      <!-- Contador de Tiempo Juntos -->
+      <section class="counter-card glass-panel" aria-label="Contador de tiempo juntos">
+        <h2 class="counter-heading">
+          <span class="heart-pulse">⏳</span> Construyendo nuestra historia juntos desde el <span id="display-anniversary-date" class="date-tag">01 de Enero</span>
+        </h2>
+        <div class="timer-grid" id="timer-grid">
+          <div class="timer-box">
+            <span class="timer-num" id="counter-days">0</span>
+            <span class="timer-label">Días</span>
+          </div>
+          <div class="timer-divider">:</div>
+          <div class="timer-box">
+            <span class="timer-num" id="counter-hours">00</span>
+            <span class="timer-label">Horas</span>
+          </div>
+          <div class="timer-divider">:</div>
+          <div class="timer-box">
+            <span class="timer-num" id="counter-minutes">00</span>
+            <span class="timer-label">Minutos</span>
+          </div>
+          <div class="timer-divider">:</div>
+          <div class="timer-box">
+            <span class="timer-num" id="counter-seconds">00</span>
+            <span class="timer-label">Segundos</span>
+          </div>
+        </div>
+        <p class="counter-footer">...y cada segundo te amo más que el anterior ✨</p>
+      </section>
+    </header>
+
+    <!-- NAVEGACIÓN DIDÁCTICA RÁPIDA -->
+    <nav class="activities-nav" aria-label="Secciones didácticas">
+      <a href="#scratch-section" class="nav-chip active">🎟️ Vales Raspa y Gana</a>
+      <a href="#trivia-section" class="nav-chip">🧩 Trivia de Pareja</a>
+      <a href="#jar-section" class="nav-chip">🫙 Frasco de Te Amo</a>
+      <a href="#letter-section" class="nav-chip">💌 Carta Abierta</a>
+      <a href="#gallery-section" class="nav-chip">📸 Galería Polaroid</a>
+      <a href="#easter-egg-section" class="nav-chip">💖 Pregunta Final</a>
+    </nav>
+
+    <!-- ACTIVIDAD DIDÁCTICA 1: VALES DE AMOR (RASPA Y GANA) -->
+    <section id="scratch-section" class="activity-section">
+      <div class="section-header">
+        <span class="section-tag">🎟️ Dinámica 1</span>
+        <h2 class="section-title">Vales de Amor: Raspa y Gana</h2>
+        <p class="section-desc">
+          Pasa tu dedo o el mouse sobre la superficie dorada de cada tarjeta para descubrir y canjear tus premios especiales. ¡Son 100% válidos y acumulables!
+        </p>
+      </div>
+
+      <div class="scratch-cards-grid" id="scratch-cards-container">
+        <!-- Tarjeta 1 (Troleo Noob vs Pro) -->
+        <article class="scratch-card-wrapper" data-id="1">
+          <div class="scratch-reward">
+            <div class="reward-icon">🎮😎</div>
+            <h3 class="reward-title">¡Eres Muy Nub y Yo Muy Pro! 🎮</h3>
+            <p class="reward-detail">Certificado oficial donde admites que eres muy noob y yo soy muy pro SAKDJSKA... pero aún siendo noobcita te amo con toda mi alma.</p>
+            <span class="reward-status-badge">¡100% Verídico y Comprobado!</span>
+          </div>
+          <canvas class="scratch-canvas" width="300" height="240"></canvas>
+          <div class="scratch-instructions">✨ Raspa aquí ✨</div>
+        </article>
+
+        <!-- Tarjeta 2 (Papisuegros) -->
+        <article class="scratch-card-wrapper" data-id="2">
+          <div class="scratch-reward">
+            <div class="reward-icon">👨‍👩‍👧❤️</div>
+            <h3 class="reward-title">Mercedes & Orlando Papisuegros</h3>
+            <p class="reward-detail">Vale por agradecerles infinitamente a Mercedes y a Orlando por haber traído al mundo a mi princesa hermosa (mis papisuegros oficiales).</p>
+            <span class="reward-status-badge">¡Aprobado por los Papisuegros!</span>
+          </div>
+          <canvas class="scratch-canvas" width="300" height="240"></canvas>
+          <div class="scratch-instructions">✨ Raspa aquí ✨</div>
+        </article>
+
+        <!-- Tarjeta 3 (Te amo Karen Sofía) -->
+        <article class="scratch-card-wrapper" data-id="3">
+          <div class="scratch-reward">
+            <div class="reward-icon">👑💖</div>
+            <h3 class="reward-title">Te Amo, Karen Sofía ❤️</h3>
+            <p class="reward-detail">Eres el amor de mi vida, mi presente, mi futuro y la casualidad más perfecta que me pasó. ¡Te amo con todo mi corazón!</p>
+            <span class="reward-status-badge">¡El Amor de Mi Vida!</span>
+          </div>
+          <canvas class="scratch-canvas" width="300" height="240"></canvas>
+          <div class="scratch-instructions">✨ Raspa aquí ✨</div>
+        </article>
+
+        <!-- Tarjeta 4 -->
+        <article class="scratch-card-wrapper" data-id="4">
+          <div class="scratch-reward">
+            <div class="reward-icon">🍦🌅</div>
+            <h3 class="reward-title">Tarde de Helado & Paseo</h3>
+            <p class="reward-detail">Vale por salir a caminar de la mano, comer tu helado favorito y desconectarnos del mundo entero.</p>
+            <span class="reward-status-badge">¡Canjeable cuando gustes!</span>
+          </div>
+          <canvas class="scratch-canvas" width="300" height="240"></canvas>
+          <div class="scratch-instructions">✨ Raspa aquí ✨</div>
+        </article>
+
+        <!-- Tarjeta 5 -->
+        <article class="scratch-card-wrapper" data-id="5">
+          <div class="scratch-reward">
+            <div class="reward-icon">🫂❤️</div>
+            <h3 class="reward-title">Abrazo Infinito Anti-Estrés</h3>
+            <p class="reward-detail">Vale por un abrazo largo y apretado para cuando el día se sienta pesado. Mi pecho siempre es tu refugio.</p>
+            <span class="reward-status-badge">¡Canjeable cuando gustes!</span>
+          </div>
+          <canvas class="scratch-canvas" width="300" height="240"></canvas>
+          <div class="scratch-instructions">✨ Raspa aquí ✨</div>
+        </article>
+
+        <!-- Tarjeta 6 (Comodín) -->
+        <article class="scratch-card-wrapper" data-id="6">
+          <div class="scratch-reward">
+            <div class="reward-icon">👑🌟</div>
+            <h3 class="reward-title">El Gran Vale Comodín</h3>
+            <p class="reward-detail">¡Tú tienes el poder! Válido por cualquier deseo, capricho, plan o antojo que se te ocurra.</p>
+            <span class="reward-status-badge">¡Comodín dorado sin caducidad!</span>
+          </div>
+          <canvas class="scratch-canvas" width="300" height="240"></canvas>
+          <div class="scratch-instructions">✨ Raspa aquí ✨</div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ACTIVIDAD DIDÁCTICA 2: TRIVIA INTERACTIVA "¿QUÉ TANTO NOS CONOCEMOS?" -->
+    <section id="trivia-section" class="activity-section">
+      <div class="section-header">
+        <span class="section-tag">🧩 Dinámica 2</span>
+        <h2 class="section-title">Trivia Didáctica: Nuestra Historia</h2>
+        <p class="section-desc">
+          Pongamos a prueba tu memoria con estos momentos clave de nosotros. ¡Veamos cuántos aciertas!
+        </p>
+      </div>
+
+      <div class="trivia-container glass-panel">
+        <div class="trivia-progress-bar">
+          <div class="trivia-progress-fill" id="trivia-progress" style="width: 20%;"></div>
+        </div>
+        <div class="trivia-header">
+          <span class="trivia-step" id="trivia-step-text">Pregunta 1 de 5</span>
+          <span class="trivia-score" id="trivia-score-text">Puntuación: 0 ❤️</span>
+        </div>
+
+        <div class="trivia-card" id="trivia-card">
+          <h3 class="trivia-question" id="trivia-question-text">Cargando pregunta...</h3>
+          <div class="trivia-options-grid" id="trivia-options">
+            <!-- Las opciones se inyectan dinámicamente con JavaScript -->
+          </div>
+          <div class="trivia-feedback hidden" id="trivia-feedback">
+            <div class="feedback-icon" id="feedback-icon">🎉</div>
+            <p class="feedback-msg" id="feedback-msg">¡Correcto, amor!</p>
+            <button class="trivia-next-btn" id="trivia-next-btn">Siguiente pregunta ➔</button>
+          </div>
+        </div>
+
+        <!-- Pantalla Final de la Trivia -->
+        <div class="trivia-completed hidden" id="trivia-completed">
+          <div class="completed-badge">🏆</div>
+          <h3 class="completed-title">¡Trivia Completada, Mi Reina!</h3>
+          <p class="completed-summary" id="trivia-summary-text">
+            ¡Obtuviste 5 de 5 respuestas correctas!
+          </p>
+          <p class="completed-love-note">
+            No importa la puntuación, lo que importa es que cada uno de esos momentos vive grabado en mi corazón para siempre. ❤️
+          </p>
+          <button class="primary-action-btn" id="trivia-restart-btn">Volver a jugar 🔄</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ACTIVIDAD DIDÁCTICA 3: EL FRASCO VIRTUAL DE RAZONES -->
+    <section id="jar-section" class="activity-section">
+      <div class="section-header">
+        <span class="section-tag">🫙 Dinámica 3</span>
+        <h2 class="section-title">El Frasco de "Razones por las que te amo"</h2>
+        <p class="section-desc">
+          Toca o haz clic en el frasco para sacar un papelito de amor. Hay decenas de razones esperando por ti.
+        </p>
+      </div>
+
+      <div class="jar-interactive-container">
+        <div class="jar-visual-wrapper" id="jar-clickable" tabindex="0" role="button" aria-label="Toca el frasco para sacar una nota de amor">
+          <div class="glass-jar">
+            <div class="jar-lid"></div>
+            <div class="jar-neck"></div>
+            <div class="jar-body">
+              <div class="jar-tag">100 Razones de Amor ❤️</div>
+              <!-- Papelitos flotando dentro del frasco -->
+              <div class="jar-notes-inside">
+                <span class="inner-note n1">💌</span>
+                <span class="inner-note n2">💖</span>
+                <span class="inner-note n3">✨</span>
+                <span class="inner-note n4">💕</span>
+                <span class="inner-note n5">🌹</span>
+                <span class="inner-note n6">💫</span>
+              </div>
+            </div>
+          </div>
+          <span class="jar-glow"></span>
+        </div>
+
+        <!-- Nota que se extrae y se abre -->
+        <div class="extracted-note-card glass-panel" id="extracted-note-box">
+          <div class="note-pin">📌</div>
+          <span class="note-number" id="note-counter-badge">Razón #1</span>
+          <p class="note-quote" id="note-quote-text">
+            "Amo la paz inmensa que siento en el pecho cada vez que me abrazas."
+          </p>
+          <button class="primary-action-btn" id="draw-another-note-btn">
+            <span>Sacar otra razón</span> 💫
+          </button>
+          <button class="secondary-btn" id="view-all-reasons-btn" style="margin-top: 12px; width: 100%;">
+            <span>📖 Ver las 100 razones completas</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ACTIVIDAD DIDÁCTICA 4: LA CARTA ABIERTA / INTERACTIVA -->
+    <section id="letter-section" class="activity-section">
+      <div class="section-header">
+        <span class="section-tag">💌 Dedicatoria</span>
+        <h2 class="section-title">Mi Carta Especial Para Ti</h2>
+        <p class="section-desc">
+          Unas palabras escritas desde lo más profundo de mi corazón.
+        </p>
+      </div>
+
+      <div class="letter-parchment-wrapper">
+        <article class="letter-parchment glass-panel">
+          <div class="parchment-stamp">❤️</div>
+          <p class="parchment-salutation" id="letter-salutation">Mi amor bonito,</p>
+          <div class="parchment-body">
+            <p>
+              Hace ya un tiempo decente estamos juntos, no he pedido que seas mi novia (qué falla, pero confía en el proceso, amor).
+            </p>
+            <p>
+              Volviendo al tema, te hice esto para que veas que programo mucho SAKDJSKA mentiras, es como una muestra de demostrar lo mucho que te amo. Cada día contigo es más especial que el anterior, realmente te amo y quiero estar contigo para siempre. Eres el amor de mi vida; tus ojos, tu voz, cada cosa de ti es perfecta y la amo, para mí eres perfecta mi amor y agradezco eternamente el día que te conocí. Sé que no soy perfecto y fallo demasiado, soy muy celoso, encimoso, hasta llego a ser fastidioso, pero recuerda que te amo. Intentaré mejorar cada día, dar más de mí mismo, ser la mejor versión de mí para que tú me ames y nunca dejes de hacerlo. Quiero un futuro contigo, quiero todo contigo, te amo mi amor, eres lo mejor de mi vida.
+            </p>
+            <p>
+              Quiero una vida llena de aura y felicidad contigo mi amor, te amo, ser felices, casarnos y vivir enamorados hasta el día de nuestra muerte, y cuando estemos en el cielo prometo buscarte y enamorarte de nuevo para estar toda la eternidad contigo.
+            </p>
+          </div>
+          <p class="parchment-farewell">Siempre tuyo,</p>
+          <p class="parchment-signature" id="letter-signature">Con todo mi amor 💕</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ACTIVIDAD DIDÁCTICA 5: GALERÍA DE RECUERDOS (POLAROID) -->
+    <section id="gallery-section" class="activity-section">
+      <div class="section-header">
+        <span class="section-tag">📸 Galería Polaroid</span>
+        <h2 class="section-title">Nuestros Instantes Favoritos</h2>
+        <p class="section-desc">
+          Momentos que se quedan para siempre en el corazón. Puedes hacer clic en cada foto para ampliarla y leer su recuerdo.
+        </p>
+      </div>
+
+      <div class="polaroid-grid" id="polaroid-grid">
+        <!-- Polaroid 1 -->
+        <figure class="polaroid-item" tabindex="0" role="button" data-photo="assets/images/recuerdo1.jpg" data-caption="Cuando fuimos al cine pero no programé bien, jugamos juegos y acosamos a un niño con disfraz de Spiderman. 😂🕷️">
+          <div class="polaroid-tape"></div>
+          <div class="polaroid-img-wrapper">
+            <img src="assets/images/recuerdo1.jpg" alt="Cine y Spiderman con Karen" loading="lazy" style="object-position: top center;">
+          </div>
+          <figcaption class="polaroid-caption">Cine & Spiderman 🕷️</figcaption>
+        </figure>
+
+        <!-- Polaroid 2 -->
+        <figure class="polaroid-item" tabindex="0" role="button" data-photo="assets/images/recuerdo2.jpg" data-caption="Ese día que con tu increíble detalle me hiciste sentir el niño más especial del mundo. ❤️">
+          <div class="polaroid-tape"></div>
+          <div class="polaroid-img-wrapper">
+            <img src="assets/images/recuerdo2.jpg" alt="Detalle especial de Spiderman" loading="lazy">
+          </div>
+          <figcaption class="polaroid-caption">Tu increíble detalle 🎁</figcaption>
+        </figure>
+
+        <!-- Polaroid 3 -->
+        <figure class="polaroid-item" tabindex="0" role="button" data-photo="assets/images/recuerdo3.jpg" data-caption="Aunque casi no te dejaste tomar fotos y además te hice esa mala broma, ese día fue increíble y siempre lo recordaré porque te amo. 🥰">
+          <div class="polaroid-tape"></div>
+          <div class="polaroid-img-wrapper">
+            <img src="assets/images/recuerdo3.jpg" alt="Karen hermosa" loading="lazy">
+          </div>
+          <figcaption class="polaroid-caption">Siempre te amaré ✨</figcaption>
+        </figure>
+      </div>
+
+      <!-- Botón para subir fotos personalizadas de ellos -->
+      <div class="custom-photo-uploader">
+        <label for="photo-file-input" class="upload-trigger-btn">
+          <span>📷 Cambiar o agregar una foto nuestra</span>
+        </label>
+        <input type="file" id="photo-file-input" accept="image/*" class="sr-only">
+        <p class="upload-note">Sube tus fotos reales para hacerla aún más tuya (se guardan de forma privada en tu navegador).</p>
+      </div>
+    </section>
+
+    <!-- ACTIVIDAD DIDÁCTICA 6: EASTER EGG / PREGUNTA ESPECIAL CON BOTÓN ESCURRIDIZO -->
+    <section id="easter-egg-section" class="activity-section">
+      <div class="section-header">
+        <span class="section-tag">💖 Pregunta Final</span>
+        <h2 class="section-title">Una Preguntita Muy Seria...</h2>
+      </div>
+
+      <div class="easter-egg-card glass-panel">
+        <div class="easter-egg-avatar">🥺👉👈</div>
+        <h3 class="easter-egg-question" id="runaway-question-text">
+          ¿Aceptas seguir siendo el amor de mi vida hoy, mañana y siempre?
+        </h3>
+        
+        <div class="easter-egg-buttons" id="easter-buttons-box">
+          <button id="btn-yes" class="btn-love-yes">
+            ¡SÍ, MIL VECES SÍ! 🥰
+          </button>
+          <button id="btn-no" class="btn-love-no">
+            No 🙈
+          </button>
+        </div>
+        <p class="runaway-hint" id="runaway-hint-text">Pista: El botón "No" es un poquito tímido... 😉</p>
+      </div>
+    </section>
+
+    <footer class="romantic-footer">
+      <div class="footer-heart">❤️</div>
+      <p class="footer-text">
+        Creado especialmente para <strong id="footer-girlfriend-name">Mi Princesa Hermosa</strong> • Con todo mi amor
+      </p>
+      <button class="back-to-top-btn" id="back-to-top-btn">Volver arriba ⬆️</button>
+    </footer>
+
+  </main>
+
+  <!-- MODAL: LIGHTBOX PARA AMPLIAR FOTOS POLAROID -->
+  <dialog class="custom-modal" id="photo-modal" aria-labelledby="modal-caption-text">
+    <div class="modal-content glass-panel">
+      <button class="modal-close-btn" id="modal-close-btn" aria-label="Cerrar">&times;</button>
+      <div class="modal-img-wrapper">
+        <img id="modal-img" src="" alt="Recuerdo ampliado">
+      </div>
+      <p id="modal-caption-text" class="modal-caption"></p>
+    </div>
+  </dialog>
+
+  <!-- MODAL: PERSONALIZADOR (NOMBRES, FECHA, MENSAJES) -->
+  <dialog class="custom-modal" id="customizer-modal" aria-labelledby="customizer-title">
+    <div class="modal-content customizer-content glass-panel">
+      <button class="modal-close-btn" id="customizer-close-btn" aria-label="Cerrar">&times;</button>
+      <div class="modal-header">
+        <span class="modal-emoji">⚙️</span>
+        <h2 id="customizer-title" class="customizer-title">Personaliza Tu Página</h2>
+        <p class="customizer-sub">Ajusta los detalles para que quede perfecta para ustedes dos:</p>
+      </div>
+
+      <form id="customizer-form" class="customizer-form">
+        <div class="form-group">
+          <label for="input-girlfriend-name">Nombre o apodo de tu novia:</label>
+          <input type="text" id="input-girlfriend-name" placeholder="Ej. Mi Princesa Hermosa, Sofi, Mi Amor" required>
+        </div>
+
+        <div class="form-group">
+          <label for="input-your-name">Tu nombre o firma:</label>
+          <input type="text" id="input-your-name" placeholder="Ej. Dani, Tu amor de siempre" required>
+        </div>
+
+        <div class="form-group">
+          <label for="input-anniversary-date">Fecha de aniversario / inicio:</label>
+          <input type="date" id="input-anniversary-date" required>
+          <small class="form-hint">El contador calculará los días, horas y segundos exactos desde este día.</small>
+        </div>
+
+        <div class="form-group">
+          <label for="input-custom-letter">Mensaje personalizado de la carta (opcional):</label>
+          <textarea id="input-custom-letter" rows="4" placeholder="Escribe aquí un mensaje especial que quieras decirle..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="input-music-file">Canción de fondo personalizada:</label>
+          <div class="song-picker-container" style="display: flex; flex-direction: column; gap: 8px;">
+            <label for="input-music-file" class="secondary-btn" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; text-align: center;">
+              <span>📁 Elegir canción de mi dispositivo (.mp3, .m4a)</span>
+            </label>
+            <input type="file" id="input-music-file" accept="audio/*" class="sr-only">
+            <span id="current-song-status" style="font-size: 0.84rem; color: var(--text-muted); font-style: italic;">
+              Canción actual: cancion.mp3 en assets/music/ (o melodía suave)
+            </span>
+          </div>
+          <small class="form-hint">💡 O simplemente coloca tu archivo con el nombre <code>cancion.mp3</code> dentro de la carpeta <code>assets/music/</code>.</small>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="secondary-btn" id="btn-reset-defaults">Restablecer sugeridos</button>
+          <button type="submit" class="primary-action-btn">Guardar Cambios ❤️</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- MODAL: CELEBRACIÓN PREGUNTA FINAL -->
+  <dialog class="custom-modal" id="celebration-modal" aria-labelledby="celebration-title">
+    <div class="modal-content celebration-content glass-panel text-center">
+      <div class="celebration-emojis">💍💖✨</div>
+      <h2 id="celebration-title" class="celebration-title">¡SABÍA QUE DIRÍAS QUE SÍ!</h2>
+      <p class="celebration-message">
+        Prometo cuidarte, escucharte, hacerte reír y recordarte cada día lo maravillosa que eres. ¡Eres lo mejor que me ha pasado en la vida! ❤️
+      </p>
+      <div class="celebration-hearts-burst">
+        <span>❤️</span><span>💖</span><span>💕</span><span>✨</span><span>🥰</span>
+      </div>
+      <button class="primary-action-btn" id="celebration-close-btn">
+        ¡Te amo con todo mi corazón! 🥰
+      </button>
+    </div>
+  </dialog>
+
+  <!-- MODAL: LISTA COMPLETA DE LAS 100 RAZONES -->
+  <dialog class="custom-modal" id="all-reasons-modal" aria-labelledby="all-reasons-title">
+    <div class="modal-content all-reasons-content glass-panel">
+      <button class="modal-close-btn" id="all-reasons-close-btn" aria-label="Cerrar">&times;</button>
+      <div class="modal-header">
+        <span class="modal-emoji">🫙❤️</span>
+        <h2 id="all-reasons-title" class="customizer-title">100 Razones Por Las Que Te Amo</h2>
+        <p class="customizer-sub">Cada papelito guardado en nuestro frasco virtual:</p>
+      </div>
+      <div class="all-reasons-scroll" id="all-reasons-list">
+        <!-- Generado dinámicamente con JavaScript -->
+      </div>
+      <button class="primary-action-btn" id="all-reasons-done-btn" style="width: 100%; margin-top: 16px;">
+        Cerrar y seguir jugando ✨
+      </button>
+    </div>
+  </dialog>
+
+  <!-- Scripts -->
+  <script src="script.js"></script>
+</body>
+</html>
