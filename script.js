@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const DEFAULT_CONFIG = {
     girlfriendName: 'Mi Princesa Hermosa',
     yourName: 'Con todo mi amor',
-    anniversaryDate: '2024-01-01',
+    anniversaryDate: '2026-05-28',
     letterMessage: `Hace ya un tiempo decente estamos juntos, no he pedido que seas mi novia (qué falla, pero confía en el proceso, amor).\n\nVolviendo al tema, te hice esto para que veas que programo mucho SAKDJSKA mentiras, es como una muestra de demostrar lo mucho que te amo. Cada día contigo es más especial que el anterior, realmente te amo y quiero estar contigo para siempre. Eres el amor de mi vida; tus ojos, tu voz, cada cosa de ti es perfecta y la amo, para mí eres perfecta mi amor y agradezco eternamente el día que te conocí. Sé que no soy perfecto y fallo demasiado, soy muy celoso, encimoso, hasta llego a ser fastidioso, pero recuerda que te amo. Intentaré mejorar cada día, dar más de mí mismo, ser la mejor versión de mí para que tú me ames y nunca dejes de hacerlo. Quiero un futuro contigo, quiero todo contigo, te amo mi amor, eres lo mejor de mi vida.\n\nQuiero una vida llena de aura y felicidad contigo mi amor, te amo, ser felices, casarnos y vivir enamorados hasta el día de nuestra muerte, y cuando estemos en el cielo prometo buscarte y enamorarte de nuevo para estar toda la eternidad contigo.`
   };
 
@@ -23,6 +23,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const loaded = saved ? { ...DEFAULT_CONFIG, ...JSON.parse(saved) } : { ...DEFAULT_CONFIG };
       if (loaded.girlfriendName === 'Mi Niña Hermosa') {
         loaded.girlfriendName = 'Mi Princesa Hermosa';
+      }
+      if (!saved || loaded.anniversaryDate === '2024-01-01') {
+        loaded.anniversaryDate = DEFAULT_CONFIG.anniversaryDate;
       }
       // Actualizar automáticamente a la nueva carta personalizada
       loaded.letterMessage = DEFAULT_CONFIG.letterMessage;
@@ -495,7 +498,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const now = new Date();
     const diffMs = now - startDate;
 
-    if (isNaN(diffMs) || diffMs < 0) {
+    if (isNaN(diffMs)) {
       daysEl.textContent = '0';
       hoursEl.textContent = '00';
       minutesEl.textContent = '00';
@@ -503,7 +506,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    const totalSeconds = Math.floor(diffMs / 1000);
+    const totalSeconds = Math.floor(Math.abs(diffMs) / 1000);
     const days = Math.floor(totalSeconds / 86400);
     const hours = Math.floor((totalSeconds % 86400) / 3600);
     const minutes = Math.floor((totalSeconds % 3600) / 60);
