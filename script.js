@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (loaded.girlfriendName === 'Mi Niña Hermosa') {
         loaded.girlfriendName = 'Mi Princesa Hermosa';
       }
-      if (!saved || loaded.anniversaryDate === '2024-01-01') {
+      if (!saved || !loaded.anniversaryDate || loaded.anniversaryDate === '2024-01-01') {
         loaded.anniversaryDate = DEFAULT_CONFIG.anniversaryDate;
       }
       // Actualizar automáticamente a la nueva carta personalizada
